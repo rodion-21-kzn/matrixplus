@@ -6,6 +6,8 @@
 #define MATRIXPLUS_S21_MATRIX_OOP_H
 
 #include <iostream>
+#include <cmath>
+#include <cfloat>
 
 class S21Matrix {
 private:
@@ -22,8 +24,6 @@ public:
     S21Matrix(const S21Matrix& other);
     S21Matrix(S21Matrix&& other);
 
-    S21Matrix(int rows, int cols, double **matrix);
-
     ~S21Matrix();             // Destructor
 
     bool EqMatrix(const S21Matrix& other);
@@ -35,6 +35,14 @@ public:
     S21Matrix CalcComplements();
     double Determinant();
     S21Matrix InverseMatrix();
+
+    // GET and SET
+
+    int GetRows() const;
+    int GetCols() const;
+    void SetCols(int cols);
+    void SetRows(int rows);
+    void SetSize(int rows, int cols);
 
     // SUPPORT
 
