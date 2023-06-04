@@ -170,20 +170,20 @@ void S21Matrix::SetRows(int rows) {
 }
 
 void S21Matrix::SetSize(int rows, int cols) {
-    if (rows_ == rows && cols_ == cols) {
-        return;
-    }
-
-    S21Matrix new_matrix(rows, cols);
-    for (int i = 0; i < new_matrix.rows_; ++i) {
-        for (int k = 0; k < new_matrix.cols_; ++k) {
-            if (i >= rows_ || k >= cols_) {
-                new_matrix.matrix_[i][k] = 0;
-            } else {
-                new_matrix.matrix_[i][k] = matrix_[i][k];
-            }
-        }
-    }
+//    if (rows_ == rows && cols_ == cols) {
+//        return;
+//    }
+//
+//    S21Matrix new_matrix(rows, cols);
+//    for (int i = 0; i < new_matrix.rows_; ++i) {
+//        for (int k = 0; k < new_matrix.cols_; ++k) {
+//            if (i >= rows_ || k >= cols_) {
+//                new_matrix.matrix_[i][k] = 0;
+//            } else {
+//                new_matrix.matrix_[i][k] = matrix_[i][k];
+//            }
+//        }
+//    }
 
 }
 
