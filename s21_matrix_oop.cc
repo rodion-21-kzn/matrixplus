@@ -2,7 +2,15 @@
 
 
 int main() {
-    S21Matrix s21_test_matrix(0,0);
+    S21Matrix s21_test_matrix(2,2);
+    S21Matrix s21_eq_matrix(2,2);
+    s21_test_matrix.InputData();
+    s21_eq_matrix.InputData();
+    if (s21_test_matrix == s21_eq_matrix) {
+        std::cout << "true";
+    } else {
+        std::cout << "false";
+    }
     return 0;
 }
 
@@ -83,26 +91,22 @@ S21Matrix S21Matrix::InverseMatrix() {
 
 // КОНСТРУКТОРЫ
 
-S21Matrix::S21Matrix() : rows_(0), cols_(0), matrix_(nullptr) {} // дефолт конструктор
+S21Matrix::S21Matrix() : rows_(0), cols_(0), matrix_(nullptr) {}
 
-S21Matrix::S21Matrix(int rows, int cols) : rows_(rows), cols_(cols) { // не дефолт конструктор ПРОВЕРИТЬ
+S21Matrix::S21Matrix(int rows, int cols) : rows_(rows), cols_(cols) {
     if (rows_ > 0 && cols_ > 0) {
         AllocatingMemory();
     } else {
-        rows_ = 0;
-        cols_ = 0;
-        matrix_ = nullptr;
+        throw std::logic_error("Wrong arguments");
     }
 }
 
 S21Matrix::S21Matrix(const S21Matrix &other) : rows_(other.rows_), cols_(other.cols_) {
     if (rows_ > 0 && cols_ > 0) {
         AllocatingMemory();
-        for (int i = 0; i < rows_; ++i) {
-            for (int k = 0; k < cols_; ++k) {
-                matrix_[i][k] = other.matrix_[i][k];
-            }
-        }
+        CopyMatrixData(other);
+    } else {
+        matrix_ = nullptr;
     }
 }
 
@@ -113,18 +117,18 @@ S21Matrix::S21Matrix(S21Matrix &&other) : rows_(other.rows_), cols_(other.cols_)
 }
 
 S21Matrix::~S21Matrix() {
-    if (matrix_ != nullptr) {
-        for (int i = 0; i < rows_; ++i) {
-            delete [] matrix_[i];
-        }
-        delete[] matrix_;
-        matrix_ = nullptr;
-        rows_ = 0;
-        cols_ = 0;
-    }
+    DeleteMatrix();
 }
 
 // SUPPORT
+
+void S21Matrix::CopyMatrixData(const S21Matrix &other) {
+    for (int i = 0; i < rows_; ++i) {
+        for (int k = 0; k < cols_; ++k) {
+            matrix_[i][k] = other.matrix_[i][k];
+        }
+    }
+}
 
 void S21Matrix::InputData() {
     for (int i = 0; i < rows_; ++i) {
@@ -139,8 +143,8 @@ void S21Matrix::PrintData() {
         for (int k = 0; k < cols_; ++k) {
             std::cout << matrix_[i][k] << " ";
         }
+        std::cout << "\n";
     }
-    std::cout << "\n";
 }
 
 
@@ -148,6 +152,18 @@ void S21Matrix::AllocatingMemory() {
     matrix_ = new double* [rows_];
     for (int i = 0; i < rows_; ++i) {
         matrix_[i] = new double[cols_];
+    }
+}
+
+void S21Matrix::DeleteMatrix() {
+    if (matrix_ != nullptr) {
+        for (int i = 0; i < rows_; ++i) {
+            delete[] matrix_[i];
+        }
+        delete[] matrix_;
+        matrix_ = nullptr;
+        rows_ = 0;
+        cols_ = 0;
     }
 }
 
@@ -162,7 +178,10 @@ int S21Matrix::GetCols() const {
 }
 
 void S21Matrix::SetCols(int cols) {
+    if (cols_ != cols) {
+        S21Matrix new_matrix(rows_, cols);
 
+    }
 }
 
 void S21Matrix::SetRows(int rows) {
@@ -187,3 +206,51 @@ void S21Matrix::SetSize(int rows, int cols) {
 
 }
 
+// OPERATORS
+
+bool S21Matrix::operator==(const S21Matrix& other) {
+    return EqMatrix(other);
+}
+
+S21Matrix& S21Matrix::operator=(const S21Matrix& other) {
+    if (this != &other) {
+        S21Matrix temp(other);
+
+        std::swap(rows_, temp.rows_);
+        std::swap(cols_, temp.cols_);
+        std::swap(matrix_, temp.matrix_);
+
+    }
+    return *this;
+}
+
+S21Matrix& S21Matrix::operator=(S21Matrix&& other) {
+    if (this != &other) {
+
+        std::swap(rows_, other.rows_);
+        std::swap(cols_, other.cols_);
+        std::swap(matrix_, other.matrix_);
+
+        other.rows_ = 0;
+        other.cols_ = 0;
+        other.matrix_ = nullptr;
+    }
+
+    return *this;
+}
+
+// старая реализация
+//S21Matrix& S21Matrix::operator=(const S21Matrix& other) {
+//    if (this != &other) {
+//        DeleteMatrix();
+//        rows_ = other.rows_;
+//        cols_ = other.cols_;
+//        if (rows_ > 0 && cols_ > 0) {
+//            AllocatingMemory();
+//            CopyMatrixData(other);
+//        } else {
+//            matrix_ = nullptr;
+//        }
+//    }
+//    return *this;
+//}

@@ -10,7 +10,7 @@
 #include <cfloat>
 
 class S21Matrix {
-private:
+private: // паблик и прайват поменять местами
     // Attributes
     int rows_, cols_;         // Rows and columns
     double **matrix_;         // Pointer to the memory where the matrix is allocated
@@ -25,6 +25,8 @@ public:
     S21Matrix(S21Matrix&& other);
 
     ~S21Matrix();             // Destructor
+
+    // Matrix func
 
     bool EqMatrix(const S21Matrix& other);
     void SumMatrix(const S21Matrix& other);
@@ -48,7 +50,14 @@ public:
 
     void PrintData();
     void InputData();
+    void DeleteMatrix();
+    void CopyMatrixData(const S21Matrix &other);
 
+    // Operators
+
+    bool operator==(const S21Matrix& other);
+    S21Matrix& operator=(const S21Matrix& other); // копирование
+    S21Matrix& operator=(S21Matrix&& other); // перемещение
 };
 
 
