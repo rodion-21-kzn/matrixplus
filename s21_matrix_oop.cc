@@ -3,9 +3,11 @@
 
 int main() {
     S21Matrix s21_test_matrix(1,1);
+    S21Matrix one(1,1);
     s21_test_matrix.InputData();
-    S21Matrix result = s21_test_matrix.InverseMatrix();
-    result.PrintData();
+    one.InputData();
+    s21_test_matrix = s21_test_matrix + one;
+    s21_test_matrix.PrintData();
     return 0;
 }
 
@@ -42,15 +44,15 @@ S21Matrix::~S21Matrix() {
 
 // GET and SET
 
-int S21Matrix::GetRows() const {
+int S21Matrix::get_rows() const {
     return rows_;
 }
 
-int S21Matrix::GetCols() const {
+int S21Matrix::get_cols() const {
     return cols_;
 }
 
-void S21Matrix::SetCols(int cols) {
+void S21Matrix::set_cols(int cols) {
     if (cols <= 0) throw std::logic_error("Wrong argument");
     if (cols_ != cols) {
         S21Matrix temp_matrix(rows_, cols);
@@ -64,7 +66,7 @@ void S21Matrix::SetCols(int cols) {
     }
 }
 
-void S21Matrix::SetRows(int rows) {
+void S21Matrix::set_rows(int rows) {
     if (rows <= 0) throw std::logic_error("Wrong argument");
     if (rows_ != rows) {
         S21Matrix temp_matrix(rows, cols_);
@@ -246,6 +248,24 @@ S21Matrix& S21Matrix::operator=(S21Matrix&& other) {
     }
 
     return *this;
+}
+
+S21Matrix S21Matrix::operator+(const S21Matrix &other) {
+    S21Matrix result_matrix(*this);
+    result_matrix.SumMatrix(other);
+    return result_matrix;
+}
+
+S21Matrix S21Matrix::operator-(const S21Matrix &other) {
+    S21Matrix result_matrix(*this);
+    result_matrix.SubMatrix(other);
+    return result_matrix;
+}
+
+S21Matrix S21Matrix::operator*(const S21Matrix &other) {
+    S21Matrix result_matrix(*this);
+    result_matrix.MulMatrix(other);
+    return result_matrix;
 }
 
 // старая реализация

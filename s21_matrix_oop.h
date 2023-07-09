@@ -40,10 +40,10 @@ public:
 
     // GET and SET
 
-    int GetRows() const;
-    int GetCols() const;
-    void SetCols(int cols);
-    void SetRows(int rows);
+    int get_rows() const;
+    int get_cols() const;
+    void set_cols(int cols);
+    void set_rows(int rows);
 
     // SUPPORT
 
@@ -58,6 +58,10 @@ public:
     bool operator==(const S21Matrix& other);
     S21Matrix& operator=(const S21Matrix& other); // копирование
     S21Matrix& operator=(S21Matrix&& other); // перемещение
+    S21Matrix operator+(const S21Matrix& other);
+    S21Matrix operator-(const S21Matrix& other);
+    S21Matrix operator*(const S21Matrix& other);
+    S21Matrix operator*(double x);
 };
 
 
