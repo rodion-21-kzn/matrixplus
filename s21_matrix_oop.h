@@ -44,7 +44,6 @@ public:
     int GetCols() const;
     void SetCols(int cols);
     void SetRows(int rows);
-    void SetSize(int rows, int cols);
 
     // SUPPORT
 
@@ -52,6 +51,7 @@ public:
     void InputData();
     void DeleteMatrix();
     void CopyMatrixData(const S21Matrix &other);
+    S21Matrix FillMinor(int delete_row, int delete_column);
 
     // Operators
 
