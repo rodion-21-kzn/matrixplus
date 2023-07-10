@@ -62,6 +62,12 @@ public:
     S21Matrix operator-(const S21Matrix& other);
     S21Matrix operator*(const S21Matrix& other);
     S21Matrix operator*(double x);
+    S21Matrix& operator+=(const S21Matrix& other);
+    S21Matrix& operator-=(const S21Matrix& other);
+    S21Matrix& operator*=(const S21Matrix& other);
+    S21Matrix& operator*=(double x);
+    double& operator()(int i, int j);
+    double operator()(int i, int j) const;
 };
 
 

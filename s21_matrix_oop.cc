@@ -1,15 +1,18 @@
 #include "s21_matrix_oop.h"
 
 
-int main() {
-    S21Matrix s21_test_matrix(1,1);
-    S21Matrix one(1,1);
-    s21_test_matrix.InputData();
-    one.InputData();
-    s21_test_matrix = s21_test_matrix + one;
-    s21_test_matrix.PrintData();
-    return 0;
-}
+//int main() {
+//    S21Matrix *matrix_1x1;
+//    matrix_1x1 = new S21Matrix(1, 1);
+//    matrix_1x1->operator()(0, 0) = 10;
+//    S21Matrix result(1, 1);
+//    result(0, 0) = 10;
+//    S21Matrix test_result(1, 1);
+//    test_result = matrix_1x1->CalcComplements();
+//    std::cout << (result == test_result);
+//
+//    return 0;
+//}
 
 // КОНСТРУКТОРЫ
 
@@ -100,7 +103,7 @@ bool S21Matrix::EqMatrix(const S21Matrix &other) {
 
 void S21Matrix::SumMatrix(const S21Matrix &other) {
     if (rows_ != other.rows_ || cols_ != other.cols_) {
-        throw std::logic_error("Different sizes of matrix");
+        throw std::logic_error("different matrix dimensions");
     } else {
         for (int i = 0; i < rows_; ++i) {
             for (int k = 0; k < cols_; ++k) {
@@ -113,7 +116,7 @@ void S21Matrix::SumMatrix(const S21Matrix &other) {
 
 void S21Matrix::SubMatrix(const S21Matrix &other) {
     if (rows_ != other.rows_ || cols_ != other.cols_) {
-        throw std::logic_error("Different sizes of matrix");
+        throw std::logic_error("different matrix dimensions");
     } else {
         for (int i = 0; i < rows_; ++i) {
             for (int k = 0; k < cols_; ++k) {
@@ -136,7 +139,7 @@ void S21Matrix::MulNumber(const double num) {
 
 void S21Matrix::MulMatrix(const S21Matrix &other) {
     if (cols_ != other.rows_) {
-        throw std::logic_error("These sizes of matrix are incorrect");
+        throw std::logic_error("the number of columns of the first matrix is not equal to the number of rows of the second matrix");
     } else {
         S21Matrix temp(rows_, other.cols_);
         for (int i = 0; i < temp.rows_; ++i) {
@@ -163,6 +166,9 @@ S21Matrix S21Matrix::Transpose() {
 S21Matrix S21Matrix::CalcComplements() {
     if (rows_ != cols_) {
         throw std::logic_error("Matrix is not square");
+    }
+    if (rows_ == 1) {
+        return *this;
     }
     S21Matrix result_matrix(rows_, cols_);
     for (int i = 0; i < rows_; ++i) {
@@ -266,6 +272,46 @@ S21Matrix S21Matrix::operator*(const S21Matrix &other) {
     S21Matrix result_matrix(*this);
     result_matrix.MulMatrix(other);
     return result_matrix;
+}
+
+S21Matrix S21Matrix::operator*(double x) {
+    S21Matrix result_matrix(*this);
+    result_matrix.MulNumber(x);
+    return result_matrix;
+}
+
+S21Matrix& S21Matrix::operator+=(const S21Matrix &other) {
+    SumMatrix(other);
+    return *this;
+}
+
+S21Matrix& S21Matrix::operator-=(const S21Matrix &other) {
+    SubMatrix(other);
+    return *this;
+}
+
+S21Matrix& S21Matrix::operator*=(const S21Matrix &other) {
+    MulMatrix(other);
+    return *this;
+}
+
+S21Matrix& S21Matrix::operator*=(double x) {
+    MulNumber(x);
+    return *this;
+}
+
+double& S21Matrix::operator()(int i, int j) {
+    if (i >= rows_ || j >= cols_ || i < 0 || j < 0) {
+        throw std::logic_error("index is outside the matrix or invalid");
+    }
+    return matrix_[i][j];
+}
+
+double S21Matrix::operator()(int i, int j) const {
+    if (i >= rows_ || j >= cols_ || i < 0 || j < 0) {
+        throw std::logic_error("index is outside the matrix or invalid");
+    }
+    return matrix_[i][j];
 }
 
 // старая реализация
