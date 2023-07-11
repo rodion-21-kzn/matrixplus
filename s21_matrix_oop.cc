@@ -2,15 +2,8 @@
 
 
 //int main() {
-//    S21Matrix *matrix_1x1;
-//    matrix_1x1 = new S21Matrix(1, 1);
-//    matrix_1x1->operator()(0, 0) = 10;
-//    S21Matrix result(1, 1);
-//    result(0, 0) = 10;
-//    S21Matrix test_result(1, 1);
-//    test_result = matrix_1x1->CalcComplements();
-//    std::cout << (result == test_result);
-//
+//    S21Matrix matrix1(4, 3), matrix2(4, 3);
+//    std::cout << (matrix1 == matrix2);
 //    return 0;
 //}
 
@@ -359,9 +352,9 @@ void S21Matrix::PrintData() {
 
 
 void S21Matrix::AllocatingMemory() {
-    matrix_ = new double* [rows_];
+    matrix_ = new double* [rows_]();
     for (int i = 0; i < rows_; ++i) {
-        matrix_[i] = new double[cols_];
+        matrix_[i] = new double[cols_]();
     }
 }
 
