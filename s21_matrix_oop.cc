@@ -241,11 +241,12 @@ S21Matrix& S21Matrix::operator=(S21Matrix&& other) {
         std::swap(cols_, other.cols_);
         std::swap(matrix_, other.matrix_);
 
+        other.DeleteMatrix();
+
         other.rows_ = 0;
         other.cols_ = 0;
         other.matrix_ = nullptr;
     }
-
     return *this;
 }
 
@@ -352,7 +353,7 @@ void S21Matrix::PrintData() {
 
 
 void S21Matrix::AllocatingMemory() {
-    matrix_ = new double* [rows_]();
+    matrix_ = new double*[rows_]();
     for (int i = 0; i < rows_; ++i) {
         matrix_[i] = new double[cols_]();
     }
