@@ -19,7 +19,7 @@ CC          := gcc
 CFLAGS      := -lstdc++ -std=c++17 -Wall -Werror -Wextra
 TEST_FLAGS 	:= -lgtest -lgmock -pthread
 
-all: test
+all: test clean
 
 $(LIB): $(SRCS)
 	$(CC) $(CFLAGS) -c $(SRCS)
