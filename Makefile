@@ -17,7 +17,6 @@ LIB			:= s21_matrix_oop.a
 
 CC          := gcc
 CFLAGS      := -lstdc++ -std=c++17 -Wall -Werror -Wextra
-TEST_FLAGS 	:= -lgtest -lgmock -pthread
 
 all: test clean
 
@@ -31,5 +30,4 @@ test: $(LIB)
 
 clean:
 	rm -rf *.o *.a $(EXE)
-	rm -rf *.gcno *gcda *.gcov *.info
-	rm -rf test ./report
+	rm -rf test

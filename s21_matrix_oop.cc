@@ -1,28 +1,5 @@
 #include "s21_matrix_oop.h"
 
-
-//int main() {
-//    S21Matrix *matrix_3x3;
-//
-//    matrix_3x3 = new S21Matrix(3,3);
-//
-//    matrix_3x3->operator()(0,0) = 1;
-//    matrix_3x3->operator()(0,1) = 2;
-//    matrix_3x3->operator()(0,2) = 3;
-//    matrix_3x3->operator()(1,0) = 0;
-//    matrix_3x3->operator()(1,1) = 4;
-//    matrix_3x3->operator()(1,2) = 2;
-//    matrix_3x3->operator()(2,0) = 5;
-//    matrix_3x3->operator()(2,1) = 2;
-//    matrix_3x3->operator()(2,2) = 1;
-//
-//    *matrix_3x3 = matrix_3x3->InverseMatrix();
-//
-//    matrix_3x3->PrintData();
-//}
-
-// КОНСТРУКТОРЫ
-
 S21Matrix::S21Matrix() : rows_(0), cols_(0), matrix_(nullptr) {}
 
 S21Matrix::S21Matrix(int rows, int cols) : rows_(rows), cols_(cols) {
@@ -42,7 +19,7 @@ S21Matrix::S21Matrix(const S21Matrix &other) : rows_(other.rows_), cols_(other.c
     }
 }
 
-S21Matrix::S21Matrix(S21Matrix &&other) : rows_(other.rows_), cols_(other.cols_), matrix_(other.matrix_) {
+S21Matrix::S21Matrix(S21Matrix &&other) noexcept : rows_(other.rows_), cols_(other.cols_), matrix_(other.matrix_) {
     other.rows_ = 0;
     other.cols_ = 0;
     other.matrix_ = nullptr;
@@ -51,8 +28,6 @@ S21Matrix::S21Matrix(S21Matrix &&other) : rows_(other.rows_), cols_(other.cols_)
 S21Matrix::~S21Matrix() {
     DeleteMatrix();
 }
-
-// GET and SET
 
 int S21Matrix::get_rows() const {
     return rows_;
@@ -89,8 +64,6 @@ void S21Matrix::set_rows(int rows) {
         *this = std::move(temp_matrix);
     }
 }
-
-// OPERATIONS
 
 bool S21Matrix::EqMatrix(const S21Matrix &other) {
     bool result = true;
@@ -133,7 +106,6 @@ void S21Matrix::SubMatrix(const S21Matrix &other) {
         }
     }
 }
-
 
 void S21Matrix::MulNumber(const double num) {
     for (int i = 0; i < rows_; ++i) {
@@ -231,8 +203,6 @@ S21Matrix S21Matrix::InverseMatrix() {
     return result_matrix;
 }
 
-// OPERATORS
-
 bool S21Matrix::operator==(const S21Matrix& other) {
     return EqMatrix(other);
 }
@@ -249,7 +219,7 @@ S21Matrix& S21Matrix::operator=(const S21Matrix& other) {
     return *this;
 }
 
-S21Matrix& S21Matrix::operator=(S21Matrix&& other) {
+S21Matrix& S21Matrix::operator=(S21Matrix&& other) noexcept {
     if (this != &other) {
 
         std::swap(rows_, other.rows_);
@@ -323,24 +293,6 @@ double S21Matrix::operator()(int i, int j) const {
     return matrix_[i][j];
 }
 
-// старая реализация
-//S21Matrix& S21Matrix::operator=(const S21Matrix& other) {
-//    if (this != &other) {
-//        DeleteMatrix();
-//        rows_ = other.rows_;
-//        cols_ = other.cols_;
-//        if (rows_ > 0 && cols_ > 0) {
-//            AllocatingMemory();
-//            CopyMatrixData(other);
-//        } else {
-//            matrix_ = nullptr;
-//        }
-//    }
-//    return *this;
-//}
-
-// SUPPORT
-
 void S21Matrix::CopyMatrixData(const S21Matrix &other) {
     for (int i = 0; i < rows_; ++i) {
         for (int k = 0; k < cols_; ++k) {
@@ -348,24 +300,6 @@ void S21Matrix::CopyMatrixData(const S21Matrix &other) {
         }
     }
 }
-
-void S21Matrix::InputData() {
-    for (int i = 0; i < rows_; ++i) {
-        for (int k = 0; k < cols_; ++k) {
-            std::cin >> matrix_[i][k];
-        }
-    }
-}
-
-void S21Matrix::PrintData() {
-    for (int i = 0; i < rows_; ++i) {
-        for (int k = 0; k < cols_; ++k) {
-            std::cout << matrix_[i][k] << " ";
-        }
-        std::cout << "\n";
-    }
-}
-
 
 void S21Matrix::AllocatingMemory() {
     matrix_ = new double*[rows_]();
@@ -405,26 +339,3 @@ S21Matrix S21Matrix::FillMinor(int delete_row, int delete_column) {
     }
     return minor;
 }
-
-//S21Matrix S21Matrix::InverseMatrix() {
-//    double determinant = 0;
-//    if (rows_ != cols_) {
-//        throw std::logic_error("Matrix is not square");
-//    }
-//    determinant = this->Determinant();
-//    if (determinant == 0) {
-//        throw std::logic_error("Determinant is zero");
-//    }
-//    S21Matrix result_matrix(*this);
-//    if (rows_ == 1) {
-//        result_matrix.matrix_[0][0] = 1 / determinant;
-//    } else {
-//        S21Matrix complements;
-//        S21Matrix transpose;
-//        complements = this->CalcComplements();
-//        transpose = complements.Transpose();
-//        transpose.MulNumber(1/determinant);
-//        result_matrix = std::move(transpose);
-//    }
-//    return result_matrix;
-//}
