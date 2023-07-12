@@ -55,12 +55,6 @@ build CMakeFiles/matrixplus.dir/s21_matrix_oop.cc.o: CXX_COMPILER__matrixplus_De
   OBJECT_DIR = CMakeFiles/matrixplus.dir
   OBJECT_FILE_DIR = CMakeFiles/matrixplus.dir
 
-build CMakeFiles/matrixplus.dir/matrix_tests.cc.o: CXX_COMPILER__matrixplus_Debug /Users/oznakban/CLionProjects/matrixplus/matrix_tests.cc || cmake_object_order_depends_target_matrixplus
-  DEP_FILE = CMakeFiles/matrixplus.dir/matrix_tests.cc.o.d
-  FLAGS = -g -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk -mmacosx-version-min=11.6 -fcolor-diagnostics -std=gnu++17
-  OBJECT_DIR = CMakeFiles/matrixplus.dir
-  OBJECT_FILE_DIR = CMakeFiles/matrixplus.dir
-
 
 # =============================================================================
 # Link build statements for EXECUTABLE target matrixplus
@@ -69,7 +63,7 @@ build CMakeFiles/matrixplus.dir/matrix_tests.cc.o: CXX_COMPILER__matrixplus_Debu
 #############################################
 # Link the executable matrixplus
 
-build matrixplus: CXX_EXECUTABLE_LINKER__matrixplus_Debug CMakeFiles/matrixplus.dir/s21_matrix_oop.cc.o CMakeFiles/matrixplus.dir/matrix_tests.cc.o
+build matrixplus: CXX_EXECUTABLE_LINKER__matrixplus_Debug CMakeFiles/matrixplus.dir/s21_matrix_oop.cc.o
   FLAGS = -g -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk -mmacosx-version-min=11.6
   OBJECT_DIR = CMakeFiles/matrixplus.dir
   POST_BUILD = :

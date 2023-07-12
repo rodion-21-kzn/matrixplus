@@ -2,9 +2,23 @@
 
 
 //int main() {
-//    S21Matrix matrix1(4, 3), matrix2(4, 3);
-//    std::cout << (matrix1 == matrix2);
-//    return 0;
+//    S21Matrix *matrix_3x3;
+//
+//    matrix_3x3 = new S21Matrix(3,3);
+//
+//    matrix_3x3->operator()(0,0) = 1;
+//    matrix_3x3->operator()(0,1) = 2;
+//    matrix_3x3->operator()(0,2) = 3;
+//    matrix_3x3->operator()(1,0) = 0;
+//    matrix_3x3->operator()(1,1) = 4;
+//    matrix_3x3->operator()(1,2) = 2;
+//    matrix_3x3->operator()(2,0) = 5;
+//    matrix_3x3->operator()(2,1) = 2;
+//    matrix_3x3->operator()(2,2) = 1;
+//
+//    *matrix_3x3 = matrix_3x3->InverseMatrix();
+//
+//    matrix_3x3->PrintData();
 //}
 
 // КОНСТРУКТОРЫ
@@ -139,6 +153,7 @@ void S21Matrix::MulMatrix(const S21Matrix &other) {
             for (int j = 0; j < temp.cols_; ++j) {
                 for (int k = 0; k < other.rows_; ++k) {
                     temp.matrix_[i][j] += matrix_[i][k] * other.matrix_[k][j];
+                    if (std::isnan(temp.matrix_[i][j]) || std::isinf(temp.matrix_[i][j])) throw std::overflow_error("overflow of double");
                 }
             }
         }
